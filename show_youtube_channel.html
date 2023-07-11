@@ -4,14 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vue.js with Tailwind CSS</title>
+    <title>Codalify Exam</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-</head>
 </head>
 
 <body class="bg-light">
@@ -36,8 +34,8 @@
                                 :alt="channels.name" width="45px" /></div>
                         <div class="p-0">
                             <ul class="list-group list-unstyled">
-                                <li class=""><span class="text-white fw-bold">{{ channels.name }}</span><span class="text-warning ms-1"><i
-                                    class="fa-solid fa-circle-check "></i></span><span
+                                <li class=""><span class="text-white fw-bold">{{ channels.name }}</span><span
+                                        class="text-warning ms-1"><i class="fa-solid fa-circle-check "></i></span><span
                                         class="text-muted"> • </span><span class="text-muted fst-italic">{{
                                         formatDate(video.created_at) }}</span></li>
                                 <li class="mt-0"><span class="text-white">{{ video.title }}</span></li>
@@ -50,13 +48,18 @@
                     </div>
 
                     <div class="px-5 text-center">
-                        <a class="" :href="video.video_link">
+                        <a :href="video.video_link">
                             <img :src="video.thumbnail" :alt="video.title" width="750" />
                         </a>
                     </div>
                 </div>
                 <hr class="text-white">
             </div>
+            <div class="text-center">
+                <button class="btn btn-light" @click="prevPage" :disabled="currentPage == 1">Previous</button>
+                <button class="btn btn-light ms-2" @click="nextPage" :disabled="currentPage == totalPages">Next</button>
+            </div>
+
         </div>
     </div>
 

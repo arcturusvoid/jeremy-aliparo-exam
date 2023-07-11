@@ -1,5 +1,5 @@
 <?php
-// Syncrhonize the time
+// Synchronize the time
 date_default_timezone_set('Asia/Singapore');
 
 // YouTube API key
@@ -26,7 +26,7 @@ $channelStatement = $pdo->prepare($channelInsertQuery);
 $channelStatement->execute([$profilePicture, $channelName, $channelDescription]);
 
 // Fetch channel videos
-$videosApiUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=$channelIdentifier&maxResults=100&order=date&type=video&key=$apiKey";
+$videosApiUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=$channelIdentifier&maxResults=50&order=date&type=video&key=$apiKey";
 $videosResponse = file_get_contents($videosApiUrl);
 $videosData = json_decode($videosResponse, true);
 
@@ -45,7 +45,6 @@ foreach ($videosData['items'] as $video) {
 }
 
 $nextPageToken = $videosData['nextPageToken'];
-
 // Fetch remaining videos from additional pages
 if ($nextPageToken) {
     $nextVideosApiUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=$channelIdentifier&maxResults=50&order=date&type=video&pageToken=$nextPageToken&key=$apiKey";
@@ -60,12 +59,6 @@ if ($nextPageToken) {
         $videoThumbnail = $video['snippet']['thumbnails']['high']['url'];
         $publishTime = $video['snippet']['publishTime'];
         $videoStatement->execute([$youtube_channel_id, $videoLink, $videoTitle, $videoDescription, $videoThumbnail, $publishTime]);
-    }
-
-    if (isset($nextVideosData['nextPageToken'])) {
-        $nextPageToken = $nextVideosData['nextPageToken'];
-    } else {
-        $nextPageToken = null;
     }
 }
 
